@@ -1,0 +1,80 @@
+
+=== 预设耗时精确标定 ===
+
+worker: http://127.0.0.1:64250
+加载完成：141.2s（worker 上报 130.66s）
+
+--- 草稿 768²/12步 ---
+  总 250.67s = 首步 177.786s + 11×4.426s + VAE ?s
+  峰值显存 16767MiB
+
+--- 标准 1024²/24步 ---
+  总 302.8s = 首步 78.07s + 23×8.819s + VAE ?s
+  峰值显存 16771MiB
+
+--- 原生 2048²/3步（测稳态用） ---
+  总 283.58s = 首步 93.463s + 2×60.705s + VAE ?s
+  峰值显存 16771MiB
+
+=== 拟合结果 ===
+
+草稿 768²/12步: 模型 226s vs 实测 250.67s（误差 -9.7%）
+标准 1024²/24步: 模型 281s vs 实测 302.8s（误差 -7.2%）
+原生 2048²/3步（测稳态用）: 模型 215s vs 实测 283.58s（误差 -24.2%）
+
+稳态步耗时 vs 像素数：
+  0.59 MP → 4.426s/步
+  1.05 MP → 8.819s/步
+  4.19 MP → 60.705s/步
+  拟合斜率 k = 13.9957 s/MP（steady ≈ 13.996 × MP）
+
+各档位推算（cold=78.07s + steps×steady + vae=?s）：
+  draft (12 步): steady=8.26s → 总 ≈ 2.8 分钟
+  standard (24 步): steady=14.68s → 总 ≈ 6.9 分钟
+  native (40 步): steady=58.70s → 总 ≈ 39.5 分钟
+
+--- JSON ---
+{
+  "results": [
+    {
+      "name": "draft",
+      "label": "草稿 768²/12步",
+      "width": 768,
+      "height": 768,
+      "steps": 12,
+      "ok": true,
+      "totalSec": 250.67,
+      "firstStepSec": 177.786,
+      "steadyStepSec": 4.426,
+      "vaeDecodeSec": null,
+      "peakVramMiB": 16767
+    },
+    {
+      "name": "standard",
+      "label": "标准 1024²/24步",
+      "width": 1024,
+      "height": 1024,
+      "steps": 24,
+      "ok": true,
+      "totalSec": 302.8,
+      "firstStepSec": 78.07,
+      "steadyStepSec": 8.819,
+      "vaeDecodeSec": null,
+      "peakVramMiB": 16771
+    },
+    {
+      "name": "native-probe",
+      "label": "原生 2048²/3步（测稳态用）",
+      "width": 2048,
+      "height": 2048,
+      "steps": 3,
+      "ok": true,
+      "totalSec": 283.58,
+      "firstStepSec": 93.463,
+      "steadyStepSec": 60.705,
+      "vaeDecodeSec": null,
+      "peakVramMiB": 16771
+    }
+  ],
+  "fitted": "see above"
+}

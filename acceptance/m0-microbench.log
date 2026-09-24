@@ -1,0 +1,60 @@
+=== �����̵� ===
+  torch 2.7.1+cu128, cuda 12.8, diffusers 0.41.0.dev0
+  QwenImage21Pipeline ���ã�True
+  GPU0 Tesla P40 sm_6.1 ���� 24319MiB / 24473MiB
+
+=== ΢��׼���� matmul ������===
+  [Tesla P40] fp32: 8.642 TFLOPS
+  [Tesla P40] fp16: 10.009 TFLOPS
+  [Tesla P40] bf16: 5.053 TFLOPS
+{
+  "modelDir": "C:\\Users\\Lison\\Desktop\\EvfWorkSpace\\dsh-qwen-image-2.1\\qwen-image-2.1",
+  "env": {
+    "python": "3.12.10",
+    "executable": "C:\\Users\\Lison\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\\python.exe",
+    "torch": "2.7.1+cu128",
+    "cuda_available": true,
+    "cuda_version": "12.8",
+    "cudnn": 90701,
+    "gpu_count": 1,
+    "gpus": [
+      {
+        "index": 0,
+        "name": "Tesla P40",
+        "sm": "6.1",
+        "smMajor": 6,
+        "totalMiB": 24473,
+        "freeMiB": 24319,
+        "multiProcessorCount": 30,
+        "supportsBf16": false
+      }
+    ],
+    "transformers": "5.17.0",
+    "diffusers": "0.41.0.dev0",
+    "diffusers_commit": null,
+    "hasQwenImage21Pipeline": true,
+    "accelerate": "1.15.0"
+  },
+  "microbench": {
+    "devices": [
+      {
+        "index": 0,
+        "name": "Tesla P40",
+        "sm": "6.1",
+        "results": [
+          {
+            "dtype": "fp32",
+            "device": "cuda:0",
+            "size": 4096,
+            "iters": 20,
+            "elapsedSec": 0.3181,
+            "tflops": 8.642
+          },
+          {
+            "dtype": "fp16",
+            "device": "cuda:0",
+            "size": 4096,
+            "iters": 20,
+            "elapsedSec": 0.2746,
+            "tflops": 10.009
+          },

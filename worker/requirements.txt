@@ -1,0 +1,34 @@
+# Qwen-Image-2.1 worker 依赖（PLAN §6.7）
+#
+# 安装：pip install -r worker/requirements.txt
+#
+# 注意：**一键安装器（installer/）不读这个文件** —— 它会按你的驱动版本自己
+# 选 torch 轮子索引并逐个安装（见 installer/lib/pystep.mjs 的 installDeps）。
+# 本文件是「手动装／二次开发」时的依赖清单，两者保持同一套包。
+
+# 核心：diffusers 必须含 QwenImage21Pipeline / QwenImage21Transformer2DModel /
+# AutoencoderKLQwenImage21。这些类目前只在主分支上（PR #14804 之后），
+# 而主分支接口会漂移 —— 所以这里**锁定 commit**，与安装器用的是同一个值
+# （installer/lib/pystep.mjs 的 DIFFUSERS_COMMIT）。升级时两边一起改。
+git+https://github.com/huggingface/diffusers.git@9f1246971270c84dcbe71233edb7a519596a5d02
+
+# 张量计算
+torch>=2.4.0
+# 精度选择（本机 Tesla P40 实测，推翻过「Pascal 上 fp16 很慢」的旧假设）：
+#   fp32  8.64 TFLOPS · fp16 10.01 TFLOPS（最快）· bf16 5.05（软件模拟，应避免）
+# 因此 sm_6.x/7.x 走 fp16，sm>=8.0 走 bf16，且必须避开 bf16 on Pascal。
+# 按需选 cu 版本：
+#   cu128:  pip install torch==2.7.1 --index-url https://download.pytorch.org/whl/cu128
+
+# transformers（>=5.17，模型卡要求）
+transformers>=5.17
+
+# 显存 offload
+accelerate
+
+# 图像处理与权重读取
+pillow
+numpy
+# 权重分片读取 / HuggingFace 下载（安装器主路径也会装这两个）
+safetensors
+huggingface_hub

@@ -1,0 +1,36 @@
+# 依赖
+node_modules/
+.pnpm-store/
+
+# ⚠️ 这里**故意不忽略** lib/ —— 它是随包发布的构建产物，必须入库。
+# 普通用户从 GitHub 下载后会直接双击 install.bat，不会跑 npm install，
+# 因此 lib/index.cjs（host 半）与 lib/client.js（client 半）必须已经在仓库里；
+# 否则插件能注册却加载不了（package.json 的 main 指向 ./lib/index.cjs）。
+# 改完 src/ 后请跑 `npm run build` 并把 lib/ 一起提交（npm test 会校验二者一致）。
+#
+# 另注：原先这里写的是没有前导斜杠的 `lib/`，git 的该模式会**匹配任意层级**的
+# lib 目录，于是连 `installer/lib/`（安装器的源码！）也一起被忽略，
+# 克隆下来安装器直接 ERR_MODULE_NOT_FOUND 崩掉。切勿再写成无斜杠的 lib/。
+dist/
+*.tsbuildinfo
+
+# Python
+worker/venv/
+__pycache__/
+*.pyc
+
+# 输出 / 权重（绝不入库）
+outputs/
+models/
+*.safetensors
+*.safetensors.index.json
+
+# 日志
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# DSH
+.dsh/

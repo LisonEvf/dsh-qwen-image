@@ -1,0 +1,36 @@
+# 行尾统一策略 —— 这是「一键安装」跨平台可用的一部分，不要删。
+#
+# 背景：Windows 上 git 默认 core.autocrlf=true，会把文本文件在检出时转成 CRLF。
+# 实测踩到的坑：克隆到 Windows 后 install.sh 变成 CRLF，shebang 成了
+# `#!/usr/bin/env sh\r`，在 Linux/macOS/WSL 上直接报 bad interpreter，
+# 一键安装对非 Windows 用户全废。反过来，若 .bat 以 LF 入库，
+# GitHub「Download ZIP」拿到的是 LF，cmd.exe 解析 goto/label 可能出错。
+#
+# 所以这里显式钉死：源码与脚本一律 LF 入库，只有 Windows 批处理是 CRLF。
+
+* text=auto eol=lf
+
+# Windows 批处理必须是 CRLF（cmd.exe 对 LF 的 label/goto 解析不可靠）
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Shell 必须 LF（CRLF 会破坏 shebang）
+*.sh text eol=lf
+
+# 二进制：不做任何行尾/编码转换
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.ico binary
+*.safetensors binary
+*.onnx binary
+*.pt binary
+*.bin binary
+*.zip binary
+*.tgz binary
+*.pdf binary
+
+# 锁文件与构建产物按文本处理，保证 diff 可读
+package-lock.json text eol=lf

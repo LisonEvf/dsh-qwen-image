@@ -1,0 +1,59 @@
+
+=== 宿主半 × 真实 worker 集成冒烟 ===
+
+权重目录：C:/Users/<用户>/Desktop/EvfWorkSpace/dsh-qwen-image-2.1/qwen-image-2.1
+python  ：C:/Users/<用户>/AppData/Local/Microsoft/WindowsApps/PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0/python.exe
+输出目录：C:\Users\<用户>\AppData\Local\Temp\qw-integ-Vb0HI0\outputs
+生成参数：768² / 12 步
+
+[qwen-image] 技能已注册：dsh-qwen-image（资源目录 C:/Users/<用户>/Desktop/EvfWorkSpace/dsh-qwen-image-2.1/dsh-qwen-image/skills）
+[qwen-image] 已加载：backend=diffusers modelDir=C:/Users/<用户>/Desktop/EvfWorkSpace/dsh-qwen-image-2.1/qwen-image-2.1 device=cuda:0/fp16 preset=draft
+  ok   插件 apply 后注册 6 个工具
+
+# image_worker start（spawn 真 Python + 加载 30GB 权重，约 60–90s）
+  ok   worker 启动并加载完成
+  ok   拿到 loadSec
+  ok   PID 存在（真进程）
+      实测 68.6s（worker 上报 54.51s），活跃子进程 1
+  ok   显式配置的 pythonExe 未被误判为不存在
+
+# image_generate（真推理 768²/12 步，约 1.5–3 分钟）
+  ok   image_generate 返回 ids
+  ok   status=completed
+  ok   带回耗时与稳态步
+  ok   设备/精度正确
+      实测总耗时 156.99s，稳态 4.433s/步，峰值显存 16767MiB
+
+# 落盘与注册表
+  ok   PNG 真实落盘
+  ok   是合法 PNG（magic 校验）
+  ok   manifest.json 已写
+  ok   sidecar JSON 已写
+      输出 C:\Users\<用户>\AppData\Local\Temp\qw-integ-Vb0HI0\outputs\generate-1.png  940867 bytes
+
+# 缩略图（历史相册网格用）
+  ok   缩略图已落盘
+  ok   缩略图用的是 WebP 格式（体积优先）
+  ok   缩略图 magic 合法（PNG 或 WebP）
+  ok   缩略图 ≤ 原图 12%（相册网格才拉得动）
+      缩略图 19640 bytes（原图的 2.1%，WebP）
+  ok   /thumb 路由已注册
+  ok   /thumb 返回 200
+  ok   /thumb 走的是**缩略图**而非原图回退
+  ok   Content-Type 与实际格式一致（WebP→image/webp）
+  ok   /thumb 字节数与磁盘缩略图一致
+
+# 同源路由
+  ok   /raw 路由已注册
+  ok   /raw 200 + image/png
+  ok   /raw 返回的字节与磁盘一致
+
+# image_result
+  ok   id='list' 列出本次记录
+  ok   按 id 取回
+
+# image_worker stop
+  ok   停止后子进程全部退出（1 → 0）
+
+=== 结果：28 通过，0 失败 ===
+

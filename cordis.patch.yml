@@ -1,0 +1,68 @@
+# @lisonevf/dsh-qwen-image — host-side Cordis bundle patch.
+#
+# 这个文件是包的 `dsh.bundle.patch` 入口（见 package.json 的 `dsh.bundle.patch`）。
+# DSH 在启动时把它作为 cordis.patch.yml 层加载进 Loader，
+# 从而把 `@lisonevf/dsh-qwen-image` 注册成 Cordis entry（host 半）。
+#
+# 注入方案（官方槽位版）：
+#   host 半（lib/index.cjs）只做业务侧注册——
+#   工具面（ctx.tools）、worker 管理、webServer 同源路由、skills 注册，
+#   **不改动宿主任何文件**。
+#
+#   界面注入全部走官方槽位：
+#   browser 半（lib/client.js）用
+#   `ctx.slots.inject('tool.call.toolview', …)` 注册工具内联卡片，
+#   `ctx.slots.inject('conversation.view', …)` 注册「画室」视图标签页。
+#
+# 配置层（§4 全部可调，无硬编码）：每一处默认值都是用户大概率会保留的值，
+# 其余交给 schema 约束。用户可在自己 profile 的 cordis.patch.yml 覆盖本行。
+
+- insert:
+    - id: qwen-image
+      name: '@lisonevf/dsh-qwen-image'
+      config:
+        # —— 执行后端 ——
+        # diffusers（本地，默认）| openai-images（远端逃生，暂不实现）| comfyui（后置）
+        backend: 'diffusers'
+
+        # —— 权重目录 ——
+        # 默认 $DSH_HOME/models/Qwen-Image-2.1；想指向已有的一份权重就覆写这里
+        # modelDir: 'D:/models/Qwen-Image-2.1'
+        modelDir: '$DSH_HOME/models/Qwen-Image-2.1'
+
+        # —— Python ——
+        # 显式优先，其次 venv，最后 PATH；留空自动探测
+        pythonExe: ''
+
+        # —— 设备 / 精度 / 显存 offload ——
+        # auto：按 compute capability 与空闲显存决策
+        device: 'auto'
+        dtype: 'auto'
+        # none | model | sequential
+        offload: 'auto'
+
+        # —— 尺寸预设 ——
+        # draft(768²,12步) | standard(1024²,24步) | native(2048²,40步) | custom
+        preset: 'standard'
+        defaultSteps: 24
+        maxPixels: 1048576
+
+        # —— 输出 ——
+        # 默认 $DSH_HOME/dsh-qwen-image/outputs
+        outputDir: '$DSH_HOME/dsh-qwen-image/outputs'
+        keepAliveMinutes: 15
+
+        # —— Worker ——
+        maxConcurrent: 1
+        toolTimeoutMs: 1800000
+        workerPort: 0
+        routePrefix: '/api/qwen-image'
+
+        # —— 权重下载（代办）——
+        allowModelFetch: true
+        hfEndpoint: 'https://hf-mirror.com'
+        modelRepo: 'Qwen/Qwen-Image-2.1'
+        maxReferenceImages: 10
+
+        # —— 显存守卫 ——
+        lowVramGuardMiB: 1024

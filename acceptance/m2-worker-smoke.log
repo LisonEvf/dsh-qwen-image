@@ -1,0 +1,98 @@
+
+=== M2 worker 协议端到端冒烟 ===
+
+配置：model=C:/Users/<用户>/Desktop/EvfWorkSpace/dsh-qwen-image-2.1/qwen-image-2.1
+      size=512 steps=4 out=C:\Users\<用户>\Desktop\EvfWorkSpace\dsh-qwen-image-2.1\dsh-qwen-image\outputs\smoke
+
+# 启动 worker
+  [worker] [2026-09-21 19:00:17] worker 启动：modelDir=C:/Users/<用户>/Desktop/EvfWorkSpace/dsh-qwen-image-2.1/qwen-image-2.1 outDir=C:\Users\<用户>\Desktop\EvfWorkSpace\dsh-qwen-image-2.1\dsh-qwen-image\outputs\smoke minVram=1024MiB
+[2026-09-21 19:00:17] 鉴权：Bearer token 已启用
+  [worker] [2026-09-21 19:00:17] 监听 http://127.0.0.1:55925
+PORT=55925
+  ✓ worker 启动并报告端口
+  → http://127.0.0.1:55925
+
+# 鉴权
+  ✓ 错误 token 被拒绝（401）
+  ✓ 缺失 token 被拒绝（401）
+
+# health / capabilities
+  ✓ /health 返回 ok
+  ✓ /health 初始状态为 idle
+  ✓ /health 带 vram 字段
+  ✓ /capabilities 报告 diffusers 后端
+  ✓ /capabilities 声明 maxRefs=10
+  ✓ /capabilities 诚实声明 mask=false（管道无独立 mask 参数）
+      diffusers=0.41.0.dev0 torch=2.7.1+cu128 cuda=12.8
+
+# 显存守卫
+  [worker] [2026-09-21 19:00:30] 加载 QwenImage21Pipeline：device=cuda:0 dtype=fp16 offload=model
+[2026-09-21 19:00:30] 权重目录：C:/Users/<用户>/Desktop/EvfWorkSpace/dsh-qwen-image-2.1/qwen-image-2.1
+  [worker] [2026-09-21 19:00:30] 显存守卫拒绝加载：空闲显存仅 24172 MiB（总 24473 MiB），低于阈值 999999 MiB。 检测到占用进程：python3.12.exe(pid 10360, 146 MiB), python3.12.exe(pid 16928, 146 MiB)。 建议：停止占用进程（如 llama-server）后重试，或把 device 切到其它卡（如 cuda:1）。
+  [worker] [2026-09-21 19:00:30] POST /load 失败：空闲显存仅 24172 MiB（总 24473 MiB），低于阈值 999999 MiB。 检测到占用进程：python3.12.exe(pid 10360, 146 MiB), python3.12.exe(pid 16928, 146 MiB)。 建议：停止占用进程（如 llama-server）后重试，或把 device 切到其它卡（如 cuda:1）。
+Traceback (most recent call last):
+  File "C:\Users\<用户>\Desktop\EvfWorkSpace\dsh-qwen-image-2.1\dsh-qwen-image\worker\server.py", line 389, in do_POST
+    self._json(ENGINE.load(spec, log=log))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\<用户>\Desktop\EvfWorkSpace\dsh-qwen-image-2.1\dsh-qwen-image\worker\pipeline_qwen21.py", line 264, in load
+    raise RuntimeError(msg)
+RuntimeError: 空闲显存仅 24172 MiB（总 24473 MiB），低于阈值 999999 MiB。 检测到占用进程：python3.12.exe(pid 10360, 146 MiB), python3.12.exe(pid 16928, 146 MiB)。 建议：停止占用进程（如 llama-server）后重试，或把 device 切到其它卡（如 cuda:1）。
+  ✓ 空闲显存低于阈值时拒绝加载并给出归因
+
+# /load（真实加载 30GB 权重，约 55–70s）
+  [worker] [2026-09-21 19:00:30] 加载 QwenImage21Pipeline：device=cuda:0 dtype=fp16 offload=model
+[2026-09-21 19:00:30] 权重目录：C:/Users/<用户>/Desktop/EvfWorkSpace/dsh-qwen-image-2.1/qwen-image-2.1
+  [worker] [2026-09-21 19:01:41] VAE tiling 已启用
+  ✓ /load 成功
+  ✓ /load 返回 loadSec
+      实测加载 71.4s（worker 上报 71.32s）
+  [worker] [2026-09-21 19:01:41] 加载完成：71.32s，显存 {'free': 24172, 'total': 24473, 'peak': 0}
+  ✓ 加载后状态为 ready
+  ✓ 加载后 dtype 解析为 fp16（P40 实测最优）
+  ✓ 加载后 offload 解析为 model
+  ✓ /load 幂等（二次调用不重载）
+
+# /generate（512², 4 步 —— 真推理）
+  [worker] [2026-09-21 19:01:41] 任务 generate-1 已入队（generate，队列深度 1）
+  ✓ /generate 返回 202 与 jobId
+  [worker] [2026-09-21 19:01:41] 开始推理：512x512 4 步 seed=42 count=1
+  ✓ /job 可查询
+      jobId=generate-1 status=queued
+
+      进度 3/4  已用 140s  预计剩余 2s   
+      进度 4/4  已用 142s   
+      进度 4/4  已用 142s   
+      进度 4/4  已用 142s     [worker] [2026-09-21 19:04:26] 已保存 C:\Users\<用户>\Desktop\EvfWorkSpace\dsh-qwen-image-2.1\dsh-qwen-image\outputs\smoke\generate-1.png（512x512, 366243 bytes）
+
+  ✓ 任务在超时内完成
+      实测总耗时 164.6s｜首步 136.798s｜稳态 1.717s/步｜VAE 解码 22.65s｜峰值显存 16767MiB
+  ✓ 结果带 images 数组
+  ✓ 结果带 seed/steps/steadyStepSec
+  ✓ 结果带 vaeDecodeSec（ETA 模型的关键分量）
+  ✓ 三段式模型与实测吻合（误差 0.0%）
+  ✓ 设备报告为 cuda:0 / fp16
+  ✓ PNG 已落盘
+  ✓ sidecar JSON 已落盘
+  ✓ 落盘文件是合法 PNG（magic 校验）
+  ✓ PNG 字节数与上报一致
+      输出 C:\Users\<用户>\Desktop\EvfWorkSpace\dsh-qwen-image-2.1\dsh-qwen-image\outputs\smoke\generate-1.png  512x512  366243 bytes  hasAlpha=true
+  ✓ sidecar 含 prompt/seed/steps/耗时/峰值显存
+
+# /logs
+  ✓ /logs 返回日志行
+
+# /cancel
+  ✓ /cancel 对未知 job 返回 cancelled=false（不崩）
+
+# /unload
+  [worker] [2026-09-21 19:04:31] 已卸载模型并释放显存
+  ✓ /unload 成功
+  ✓ 卸载后状态回到 idle
+      卸载后空闲显存 24123 MiB
+  ✓ 健康检查可持续访问（非瞬时异常）
+
+# 停止 worker
+  ✓ worker 已退出（无僵尸进程）
+
+=== 结果：35 通过，0 失败 ===
+

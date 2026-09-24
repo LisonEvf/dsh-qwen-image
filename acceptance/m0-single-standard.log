@@ -1,0 +1,321 @@
+=== 单次实跑 1024x1024:24 ===
+  加载 pipeline（fp16）...
+C:\Users\<用户>\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\diffusers\utils\deprecation_utils.py:23: FutureWarning: `torch_dtype` is deprecated and will be removed in version 1.0.0. Please use `dtype` instead.
+  deprecate("torch_dtype", "1.0.0", _TORCH_DTYPE_DEPRECATION_MESSAGE)
+
+Loading pipeline components...:   0%|          | 0/5 [00:00<?, ?it/s]
+Loading pipeline components...:  20%|██        | 1/5 [00:00<00:01,  2.00it/s]
+
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  50%|█████     | 1/2 [00:11<00:11, 11.03s/it][A
+
+Loading checkpoint shards: 100%|██████████| 2/2 [00:15<00:00,  7.34s/it][A
+Loading checkpoint shards: 100%|██████████| 2/2 [00:15<00:00,  7.89s/it]
+
+Loading pipeline components...:  40%|████      | 2/5 [00:16<00:28,  9.52s/it]
+
+Loading weights:   0%|          | 0/750 [00:00<?, ?it/s][A
+
+Loading weights:   2%|▏         | 15/750 [00:00<00:05, 128.21it/s][A
+
+Loading weights:   4%|▎         | 28/750 [00:00<00:18, 39.64it/s] [A
+
+Loading weights:   5%|▍         | 35/750 [00:01<00:26, 27.14it/s][A
+
+Loading weights:   5%|▌         | 41/750 [00:01<00:28, 24.80it/s][A
+
+Loading weights:   6%|▌         | 45/750 [00:01<00:34, 20.24it/s][A
+
+Loading weights:   7%|▋         | 54/750 [00:01<00:28, 24.45it/s][A
+
+Loading weights:   8%|▊         | 57/750 [00:02<00:34, 20.06it/s][A
+
+Loading weights:   8%|▊         | 61/750 [00:02<00:32, 21.23it/s][A
+
+Loading weights:   9%|▊         | 64/750 [00:02<00:40, 16.83it/s][A
+
+Loading weights:   9%|▉         | 66/750 [00:02<00:41, 16.39it/s][A
+
+Loading weights:   9%|▉         | 71/750 [00:03<00:33, 20.51it/s][A
+
+Loading weights:  10%|█         | 77/750 [00:03<00:31, 21.07it/s][A
+
+Loading weights:  11%|█         | 80/750 [00:03<00:34, 19.38it/s][A
+
+Loading weights:  11%|█▏        | 86/750 [00:03<00:36, 17.95it/s][A
+
+Loading weights:  12%|█▏        | 88/750 [00:04<00:39, 16.96it/s][A
+
+Loading weights:  13%|█▎        | 94/750 [00:04<00:28, 23.30it/s][A
+
+Loading weights:  13%|█▎        | 97/750 [00:04<00:42, 15.40it/s][A
+
+Loading weights:  14%|█▎        | 103/750 [00:04<00:31, 20.63it/s][A
+
+Loading weights:  14%|█▍        | 106/750 [00:04<00:32, 20.11it/s][A
+
+Loading weights:  15%|█▍        | 109/750 [00:05<00:32, 19.77it/s][A
+
+Loading weights:  15%|█▍        | 112/750 [00:05<00:36, 17.68it/s][A
+
+Loading weights:  16%|█▌        | 120/750 [00:05<00:31, 19.99it/s][A
+
+Loading weights:  16%|█▋        | 123/750 [00:05<00:34, 18.18it/s][A
+
+Loading weights:  17%|█▋        | 127/750 [00:05<00:31, 19.65it/s][A
+
+Loading weights:  17%|█▋        | 130/750 [00:06<00:38, 16.02it/s][A
+
+Loading weights:  18%|█▊        | 132/750 [00:06<00:42, 14.71it/s][A
+
+Loading weights:  19%|█▉        | 141/750 [00:06<00:23, 26.15it/s][A
+
+Loading weights:  19%|█▉        | 145/750 [00:07<00:35, 17.15it/s][A
+
+Loading weights:  20%|█▉        | 148/750 [00:07<00:32, 18.73it/s][A
+
+Loading weights:  20%|██        | 152/750 [00:07<00:30, 19.91it/s][A
+
+Loading weights:  21%|██        | 155/750 [00:07<00:36, 16.14it/s][A
+
+Loading weights:  21%|██▏       | 160/750 [00:07<00:28, 20.41it/s][A
+
+Loading weights:  22%|██▏       | 163/750 [00:08<00:29, 19.90it/s][A
+
+Loading weights:  22%|██▏       | 166/750 [00:08<00:36, 16.08it/s][A
+
+Loading weights:  23%|██▎       | 173/750 [00:08<00:30, 18.72it/s][A
+
+Loading weights:  23%|██▎       | 176/750 [00:08<00:36, 15.91it/s][A
+
+Loading weights:  24%|██▍       | 182/750 [00:08<00:27, 20.84it/s][A
+
+Loading weights:  25%|██▍       | 185/750 [00:09<00:27, 20.29it/s][A
+
+Loading weights:  25%|██▌       | 188/750 [00:09<00:28, 19.94it/s][A
+
+Loading weights:  25%|██▌       | 191/750 [00:09<00:29, 18.79it/s][A
+
+Loading weights:  26%|██▌       | 194/750 [00:09<00:27, 20.44it/s][A
+
+Loading weights:  26%|██▋       | 197/750 [00:10<00:42, 13.06it/s][A
+
+Loading weights:  27%|██▋       | 204/750 [00:10<00:27, 19.85it/s][A
+
+Loading weights:  28%|██▊       | 209/750 [00:10<00:23, 22.85it/s][A
+
+Loading weights:  28%|██▊       | 212/750 [00:10<00:31, 17.07it/s][A
+
+Loading weights:  29%|██▊       | 215/750 [00:10<00:30, 17.73it/s][A
+
+Loading weights:  29%|██▉       | 218/750 [00:11<00:43, 12.15it/s][A
+
+Loading weights:  30%|███       | 226/750 [00:11<00:26, 19.98it/s][A
+
+Loading weights:  31%|███       | 229/750 [00:11<00:32, 16.18it/s][A
+
+Loading weights:  31%|███       | 232/750 [00:11<00:31, 16.62it/s][A
+
+Loading weights:  31%|███▏      | 236/750 [00:12<00:26, 19.19it/s][A
+
+Loading weights:  32%|███▏      | 239/750 [00:12<00:33, 15.39it/s][A
+
+Loading weights:  33%|███▎      | 244/750 [00:12<00:28, 17.57it/s][A
+
+Loading weights:  33%|███▎      | 248/750 [00:13<00:43, 11.49it/s][A
+
+Loading weights:  34%|███▍      | 257/750 [00:14<00:56,  8.72it/s][A
+
+Loading weights:  36%|███▌      | 268/750 [00:14<00:33, 14.56it/s][A
+
+Loading weights:  36%|███▋      | 272/750 [00:14<00:32, 14.53it/s][A
+
+Loading weights:  37%|███▋      | 276/750 [00:15<00:30, 15.57it/s][A
+
+Loading weights:  37%|███▋      | 281/750 [00:15<00:32, 14.21it/s][A
+
+Loading weights:  38%|███▊      | 284/750 [00:15<00:31, 14.59it/s][A
+
+Loading weights:  39%|███▉      | 294/750 [00:15<00:19, 23.75it/s][A
+
+Loading weights:  40%|███▉      | 298/750 [00:16<00:27, 16.41it/s][A
+
+Loading weights:  40%|████      | 303/750 [00:16<00:23, 19.37it/s][A
+
+Loading weights:  41%|████      | 307/750 [00:16<00:25, 17.28it/s][A
+
+Loading weights:  41%|████▏     | 310/750 [00:16<00:25, 17.48it/s][A
+
+Loading weights:  42%|████▏     | 314/750 [00:17<00:23, 18.94it/s][A
+
+Loading weights:  42%|████▏     | 318/750 [00:17<00:41, 10.35it/s][A
+
+Loading weights:  43%|████▎     | 321/750 [00:18<00:47,  9.03it/s][A
+
+Loading weights:  43%|████▎     | 323/750 [00:19<01:35,  4.47it/s][A
+
+Loading weights:  44%|████▍     | 329/750 [00:20<01:03,  6.67it/s][A
+
+Loading weights:  44%|████▍     | 331/750 [00:22<01:13,  5.73it/s][A
+
+Loading weights:  44%|████▍     | 332/750 [00:22<02:06,  3.31it/s][A
+
+Loading weights:  45%|████▍     | 336/750 [00:24<01:40,  4.12it/s][A
+
+Loading weights:  45%|████▍     | 337/750 [00:24<03:20,  2.06it/s][A
+
+Loading weights:  46%|████▌     | 342/750 [00:26<02:36,  2.61it/s][A
+
+Loading weights:  46%|████▋     | 347/750 [00:27<01:39,  4.06it/s][A
+
+Loading weights:  47%|████▋     | 349/750 [00:29<02:15,  2.96it/s][A
+
+Loading weights:  47%|████▋     | 350/750 [00:29<02:59,  2.23it/s][A
+
+Loading weights:  48%|████▊     | 358/750 [00:29<01:19,  4.96it/s][A
+
+Loading weights:  48%|████▊     | 361/750 [00:30<01:06,  5.83it/s][A
+
+Loading weights:  48%|████▊     | 363/750 [00:30<01:12,  5.34it/s][A
+
+Loading weights:  49%|████▉     | 368/750 [00:30<00:50,  7.61it/s][A
+
+Loading weights:  49%|████▉     | 370/750 [00:30<00:54,  6.95it/s][A
+
+Loading weights:  50%|████▉     | 372/750 [00:31<00:51,  7.39it/s][A
+
+Loading weights:  50%|█████     | 377/750 [00:31<00:32, 11.59it/s][A
+
+Loading weights:  51%|█████     | 380/750 [00:31<00:31, 11.82it/s][A
+
+Loading weights:  51%|█████     | 383/750 [00:31<00:34, 10.60it/s][A
+
+Loading weights:  52%|█████▏    | 390/750 [00:31<00:22, 16.14it/s][A
+
+Loading weights:  55%|█████▌    | 413/750 [00:31<00:07, 44.24it/s][A
+
+Loading weights:  58%|█████▊    | 437/750 [00:32<00:04, 74.00it/s][A
+
+Loading weights:  61%|██████▏   | 461/750 [00:32<00:02, 102.29it/s][A
+
+Loading weights:  64%|██████▍   | 482/750 [00:32<00:02, 117.31it/s][A
+
+Loading weights:  68%|██████▊   | 511/750 [00:32<00:01, 151.29it/s][A
+
+Loading weights:  71%|███████▏  | 535/750 [00:32<00:01, 165.33it/s][A
+
+Loading weights:  75%|███████▍  | 559/750 [00:32<00:01, 176.54it/s][A
+
+Loading weights:  77%|███████▋  | 581/750 [00:32<00:01, 168.85it/s][A
+
+Loading weights:  80%|████████  | 600/750 [00:32<00:00, 168.66it/s][A
+
+Loading weights:  82%|████████▏ | 618/750 [00:33<00:00, 140.99it/s][A
+
+Loading weights:  85%|████████▍ | 634/750 [00:33<00:01, 113.07it/s][A
+
+Loading weights:  86%|████████▋ | 647/750 [00:33<00:01, 99.75it/s] [A
+
+Loading weights:  88%|████████▊ | 659/750 [00:33<00:01, 82.62it/s][A
+
+Loading weights:  90%|█████████ | 676/750 [00:33<00:00, 78.71it/s][A
+
+Loading weights:  92%|█████████▏| 691/750 [00:34<00:00, 89.37it/s][A
+
+Loading weights:  94%|█████████▍| 704/750 [00:34<00:00, 96.37it/s][A
+
+Loading weights:  95%|█████████▌| 715/750 [00:34<00:00, 93.83it/s][A
+
+Loading weights:  97%|█████████▋| 726/750 [00:34<00:00, 58.71it/s][A
+
+Loading weights:  98%|█████████▊| 734/750 [00:35<00:00, 29.22it/s][A
+
+Loading weights:  99%|█████████▊| 740/750 [00:36<00:00, 22.91it/s][A
+Loading weights: 100%|██████████| 750/750 [00:36<00:00, 20.79it/s]
+
+Loading pipeline components...:  60%|██████    | 3/5 [00:58<00:48, 24.31s/it]
+Loading pipeline components...:  80%|████████  | 4/5 [00:59<00:15, 15.08s/it]
+Loading pipeline components...: 100%|██████████| 5/5 [01:02<00:00, 10.68s/it]
+Loading pipeline components...: 100%|██████████| 5/5 [01:02<00:00, 12.41s/it]
+  加载 62.18s，RSS 65MiB
+
+  0%|          | 0/24 [00:00<?, ?it/s]
+  4%|▍         | 1/24 [01:01<23:30, 61.31s/it]
+  8%|▊         | 2/24 [01:09<10:57, 29.87s/it]
+ 12%|█▎        | 3/24 [01:17<07:03, 20.18s/it]
+ 17%|█▋        | 4/24 [01:26<05:12, 15.64s/it]
+ 21%|██        | 5/24 [01:35<04:09, 13.13s/it]
+ 25%|██▌       | 6/24 [01:43<03:29, 11.63s/it]
+ 29%|██▉       | 7/24 [01:52<03:01, 10.68s/it]
+ 33%|███▎      | 8/24 [02:01<02:40, 10.06s/it]
+ 38%|███▊      | 9/24 [02:10<02:24,  9.65s/it]
+ 42%|████▏     | 10/24 [02:18<02:11,  9.36s/it]
+ 46%|████▌     | 11/24 [02:27<01:59,  9.17s/it]
+ 50%|█████     | 12/24 [02:36<01:48,  9.04s/it]
+ 54%|█████▍    | 13/24 [02:45<01:38,  8.95s/it]
+ 58%|█████▊    | 14/24 [02:53<01:29,  8.91s/it]
+ 62%|██████▎   | 15/24 [03:02<01:19,  8.86s/it]
+ 67%|██████▋   | 16/24 [03:11<01:10,  8.84s/it]
+ 71%|███████   | 17/24 [03:20<01:01,  8.83s/it]
+ 75%|███████▌  | 18/24 [03:28<00:52,  8.82s/it]
+ 79%|███████▉  | 19/24 [03:37<00:44,  8.81s/it]
+ 83%|████████▎ | 20/24 [03:46<00:35,  8.83s/it]
+ 88%|████████▊ | 21/24 [03:55<00:26,  8.90s/it]
+ 92%|█████████▏| 22/24 [04:04<00:17,  8.93s/it]
+ 96%|█████████▌| 23/24 [04:13<00:08,  9.00s/it]
+100%|██████████| 24/24 [04:22<00:00,  9.03s/it]
+100%|██████████| 24/24 [04:23<00:00, 10.96s/it]
+C:\Users\<用户>\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\diffusers\image_processor.py:142: RuntimeWarning: invalid value encountered in cast
+  images = (images * 255).round().astype("uint8")
+  总耗时 304.19s（首步 76.534s，稳态 8.769s/步）
+  峰值显存 16767MiB，RSS 12160MiB
+{
+  "modelDir": "C:\\Users\\Lison\\Desktop\\EvfWorkSpace\\dsh-qwen-image-2.1\\qwen-image-2.1",
+  "single": {
+    "width": 1024,
+    "height": 1024,
+    "steps": 24,
+    "tag": "1024x1024",
+    "ok": true,
+    "elapsedSec": 304.19,
+    "secPerStep": 12.675,
+    "stepTimes": [
+      76.534,
+      7.857,
+      8.663,
+      8.676,
+      8.669,
+      8.733,
+      8.718,
+      8.724,
+      8.739,
+      8.72,
+      8.735,
+      8.75,
+      8.749,
+      8.795,
+      8.761,
+      8.785,
+      8.808,
+      8.788,
+      8.802,
+      8.883,
+      9.062,
+      8.98,
+      9.169,
+      9.117
+    ],
+    "firstStepSec": 76.534,
+    "steadyStepSec": 8.769,
+    "imageSize": [
+      1024,
+      1024
+    ],
+    "imageMode": "RGBA",
+    "peakVramMiB": 16767,
+    "freeAfterMiB": 24251,
+    "rssMiB": 12160,
+    "loadSec": 62.18
+  }
+}

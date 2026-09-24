@@ -1,0 +1,87 @@
+{
+  "name": "@lisonevf/dsh-qwen-image",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "DSH 对话式生图 / 改图插件，专用于 Qwen-Image-2.1（diffusers 后端）。",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lisonevf/dsh-qwen-image.git"
+  },
+  "homepage": "https://github.com/lisonevf/dsh-qwen-image#readme",
+  "bugs": {
+    "url": "https://github.com/lisonevf/dsh-qwen-image/issues"
+  },
+  "keywords": [
+    "dsh",
+    "plugin",
+    "qwen-image",
+    "image-generation",
+    "diffusers"
+  ],
+  "main": "./lib/index.cjs",
+  "files": [
+    "lib",
+    "worker",
+    "skills",
+    "docs",
+    "installer",
+    "cordis.patch.yml",
+    "install.bat",
+    "install.sh",
+    "使用说明.txt",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs && node scripts/build-client.mjs",
+    "build:host": "node scripts/build.mjs",
+    "build:client": "node scripts/build-client.mjs",
+    "test": "node scripts/check-host-deps.mjs && node scripts/smoke-host.mjs && node scripts/smoke-host-e2e.mjs && node scripts/smoke-client.mjs && node scripts/smoke-installer.mjs",
+    "install:check": "node installer/install.mjs --check",
+    "install:dry": "node installer/install.mjs --dry-run",
+    "check:release": "node scripts/check-release.mjs",
+    "check:release:full": "node scripts/check-release.mjs --full",
+    "test:real": "node scripts/verify-against-real-dsh.mjs && node scripts/check-profile-resolution.cjs",
+    "test:gpu": "node scripts/smoke-worker.mjs",
+    "test:integration": "node scripts/smoke-integration.mjs",
+    "smoke:host": "node scripts/smoke-host.mjs",
+    "smoke:worker": "node scripts/smoke-worker.mjs",
+    "smoke:integration": "node scripts/smoke-integration.mjs",
+    "bench": "node scripts/preset-bench.mjs",
+    "hw:probe": "python worker/hw_probe.py",
+    "prepare": "node scripts/build.mjs"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.31",
+    "esbuild": "^0.25.12",
+    "react": "^18.3.1",
+    "tsdown": "^0.12.3",
+    "typescript": "^5.7.0"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "slots"
+      ],
+      "immediately": false
+    }
+  },
+  "exports": {
+    ".": {
+      "default": "./lib/index.cjs"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  }
+}

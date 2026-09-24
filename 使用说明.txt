@@ -1,0 +1,88 @@
+dsh-qwen-image —— 怎么用（先读这一页，30 秒）
+================================================================
+
+■ 这是什么
+  给 dsh（DeepSeek Harness）装一个「在对话里直接生图 / 改图」的插件，
+  模型是 Qwen-Image-2.1（原生 2K、原生透明 PNG、支持改图）。
+  装好之后你在 GUI 里说「画一只戴墨镜的柴犬」就会直接出图。
+
+
+■ 怎么装（Windows）
+  0) 先把插件下载到本地：
+       git clone https://github.com/lisonevf/dsh-qwen-image.git
+     或者在该 GitHub 页面点 Code → Download ZIP 再解压。
+  1) 双击本目录下的  install.bat
+     —— 它会先体检你的电脑，再问你「要不要下载 30.9GB 权重」。
+  2) 装完后重启 dsh（用哪个 profile 安装器收尾会打印出来，通常是 web）：
+         dsh --profile web
+     （如果安装器打印的是别的 profile，就把 web 换成它打印的那个）
+  3) 打开 GUI（默认 http://127.0.0.1:3080），在对话里直接说：
+         画一只戴墨镜的柴犬
+
+  想先看看它会做什么、什么都不改：  install.bat --check
+  想先看一遍流程但不执行：          install.bat --dry-run
+  全部用默认答案（无人值守）：       install.bat --yes
+
+
+■ 怎么装（Linux / macOS）
+     sh install.sh
+  （macOS 会用 PyPI 版 torch，但本插件只认 NVIDIA CUDA，实际按 CPU 推理 —— 1024² 一张要数小时，仅供试跑）
+
+
+■ 需要什么
+  - Windows 10/11 或 Linux（macOS 只能按 CPU 推理，仅供试跑）
+  - Node.js 18+（dsh 本身就需要；没有的话安装器会告诉你去哪下）
+  - 已经装好 dsh（npm install -g @deepseek-ai/dsh）
+  - 磁盘：约 40GB 可用（权重 30.9GB + Python 依赖 8.4GB；安装器判定时另留 5% 余量，实际约需 41GB）
+  - 显卡：NVIDIA（推荐 16GB 以上显存）。没有 N 卡也能装，但会很慢。
+  - 不需要管理员权限，不改系统环境变量，不动别的软件。
+    安装器只在 %USERPROFILE%\.dsh\ 下面建东西。
+
+
+■ 安装器都做了什么（可反复运行，只补缺的）
+  1. 体检：系统 / 显卡 / 驱动 / 内存 / 磁盘 / Python / dsh / 网络
+  2. 生成安装计划：选 Python 策略、按驱动选 PyTorch 轮子、给精度/显存档位建议
+  3. 备好 Python 解释器：能复用就复用（比如你装过 ComfyUI 或已装好 torch），
+     完全没有 Python 时会自动下载 uv 并托管一个 Python 3.12
+  4. 建独立 venv（%USERPROFILE%\.dsh\dsh-qwen-image\venv），不污染系统环境
+  5. 装 Python 依赖（torch / diffusers / transformers 等，约 3-6GB，视网速 5-40 分钟）
+     —— 自动挑最快的 pip 源（国内走清华 TUNA；torch 轮子另有阿里云镜像兜底）
+  6. 下载权重（可跳过：--no-model）；支持断点续传，中断后重跑接着下
+  7. 注册插件到 profile（用官方命令 dsh plugin --profile <自动挑到的 profile> add），
+     并写好配置，最后再核验一遍：把 torch / diffusers / transformers / 显卡逐项打印出来
+     （权重在第 6 步已单独报过）
+
+
+■ 装完怎么用
+  在对话里直接说人话即可：
+    「画一只戴墨镜的柴犬」            → 出草稿（768²，约 2.5 分钟）
+    「改成 1024² 定稿」               → 出标准图（约 5.0 分钟）
+    「用 native 出 2048² 原图」       → 出原图（2048²，约 43 分钟）
+    「把刚才那张的背景换成黄昏海滩」   → 改图
+  会话顶部的「相册」标签可以回看历史作品、复制 id、释放显存。
+
+
+■ 注意
+  装完后请不要删除或移动插件目录 —— 插件是链接安装的，
+  删掉目录会导致 dsh 启动时加载失败。要卸载见 docs/INSTALL.md 第 8 节。
+
+
+■ 出问题了怎么办
+  1) 先跑一次体检，它会说清缺什么：
+         install.bat --check   （只读诊断，缺什么说什么；有硬性问题时退出码为 2，属正常结果）
+     Linux / macOS 用：  sh install.sh --check
+  2) 日志在：  %USERPROFILE%\.dsh\dsh-qwen-image\logs\
+     装完的机器上还记录了当时选了哪个 Python / 哪路 torch：
+         %USERPROFILE%\.dsh\dsh-qwen-image\install-state.json
+  3) 常见问题：
+     - 「dsh 命令找不到」→ 先 npm install -g @deepseek-ai/dsh
+     - 「dsh plugin 报 pnpm 相关错误」→ npm install -g pnpm 后重跑
+     - 「显存不足」→ 关掉占用显卡的程序（比如本地大模型），或换一张卡
+     - 「权重下载很慢」→ 换端点：install.bat --endpoint https://huggingface.co
+     - 「安装完看不到图片卡片」→ 必须重启 dsh（客户端半只在启动时加载）
+
+
+■ 许可（重要）
+  本插件代码：Apache-2.0（详见 LICENSE）。
+  Qwen-Image-2.1 权重：Qwen Research License，仅限研究用途，商用需另行授权。
+  本项目不携带、不分发任何模型权重，权重由你自己从 HuggingFace / ModelScope 下载。
