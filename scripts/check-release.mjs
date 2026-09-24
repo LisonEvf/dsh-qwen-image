@@ -267,9 +267,15 @@ if (FULL) {
     warn('跳过重建核对', '本地没有 node_modules（需要 devDependencies 才能重建）')
   } else {
     try {
-      console.log('  … 正在 npm run build')
-      execFileSync(process.platform === 'win32' ? 'npm.cmd' : 'npm', ['run', 'build'], { cwd: ROOT, stdio: 'ignore' })
+      // 直接用 node 跑构建脚本，而不是 `npm run build`：
+      // Windows 上 Node 20+ 不许 spawn `npm.cmd`（EINVAL，需 shell），
+      // 而这两个脚本本来就可以独立执行，绕开 npm 更稳。
+      for (const script of ['scripts/build.mjs', 'scripts/build-client.mjs']) {
+        console.log(`  … node ${script}`)
+        execFileSync(process.execPath, [script], { cwd: ROOT, stdio: 'ignore' })
+      }
       check('重建后 lib/index.cjs 仍是有效文件', statSync(join(ROOT, 'lib/index.cjs')).size > 1000)
+      check('重建后 lib/client.js 仍是有效文件', statSync(join(ROOT, 'lib/client.js')).size > 1000)
       if (existsSync(join(ROOT, '.git'))) {
         const st = git(['status', '--porcelain', '--', 'lib'])
         const dirty = (st.out || '').trim()
