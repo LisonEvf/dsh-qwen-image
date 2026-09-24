@@ -235,9 +235,18 @@ dsh-qwen-image/
 │  ├─ smoke-client-view.mjs     # 卡片/画室结构冒烟
 │  ├─ hw-probe.mjs              # 采集 GPU/RAM/权重/依赖事实（M0 与排障共用）
 │  └─ sync-profile.mjs          # 一键 link 进 profile 并 --dump-config 校验
-├─ docs/  INSTALL.md / MODEL-DOWNLOAD.md / HARDWARE.md / TOOLS.md / TROUBLESHOOTING.md
+├─ docs/  INSTALL.md / TROUBLESHOOTING.md / HARDWARE.md / TOOLS.md / PLAN.md（本文）
 └─ acceptance/  证据日志与截图（照抄 stock-panel 的 acceptance 习惯）
 ```
+
+> 上面这棵树是**开发前的规划**，实际落地时有出入，以仓库现状为准。主要差异：
+> - `docs/MODEL-DOWNLOAD.md` 没做 —— 权重下载已并入 `docs/INSTALL.md` 与 `image_status` / `image_model_fetch`。
+> - `scripts/` 实际是 14 个脚本（多了 `check-release.mjs` 发布闸门、`smoke-host-e2e.mjs`、
+>   `smoke-worker*.mjs`、`smoke-integration.mjs`、`preset-bench.mjs`、`check-profile-resolution.cjs`、
+>   `verify-against-real-dsh.mjs` 等）；原先设想的 `hw-probe.mjs` / `sync-profile.mjs` /
+>   `smoke-client-view.mjs` 改由 `worker/hw_probe.py` 与上述脚本承担。
+> - `lib/`（host 半 `index.cjs` + client 半 `client.js`）是**随仓库分发**的构建产物，不是本地临时产物。
+> - 安装器实际为 `installer/install.mjs` + `installer/lib/*.mjs`（7 个模块）。
 
 ---
 

@@ -11,6 +11,8 @@ node_modules/
 # 另注：原先这里写的是没有前导斜杠的 `lib/`，git 的该模式会**匹配任意层级**的
 # lib 目录，于是连 `installer/lib/`（安装器的源码！）也一起被忽略，
 # 克隆下来安装器直接 ERR_MODULE_NOT_FOUND 崩掉。切勿再写成无斜杠的 lib/。
+
+# 其它构建残留
 dist/
 *.tsbuildinfo
 
